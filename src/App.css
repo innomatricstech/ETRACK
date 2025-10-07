@@ -1,203 +1,830 @@
-/* ---------------- Custom Brand Colors and Variables ---------------- */
+/* ---------------- Brand Variables ---------------- */
+
 :root {
-  --brand-blue-dark: #003366; /* Deep Blue from Logo - Primary Background */
-  --brand-blue-light: #007bff; /* Brighter Blue - Secondary/Accent */
-  --brand-text-color: #1e1e1e; /* Darker text for readability */
-  --section-bg-light: #f8f9fa; /* Light grey background for contrast sections */
-  --section-padding: 80px 0; /* Standard padding for all sections */
-  --navbar-padding-y: 1.5rem; /* Increased vertical padding for bigger logo */
+
+  /* New Theme: Dark Blue & Sky Blue */
+
+  --brand-blue-dark: #0a1931; /* Very Dark Blue/Navy */
+
+  --brand-blue-mid: #15325c; /* Medium Slate Blue */
+
+  --brand-sky-accent: #5ad9f9; /* Bright Sky Blue/Cyan Accent */
+
+  --brand-text-color: #1a1a1a;
+
+  --section-bg-light: #f0f8ff; /* Light Sky Blue/Alice Blue (Good background color) */
+
+  --section-padding: 120px 0; /* Increased padding for better gap/visual space */
+
+  --gradient-main: linear-gradient(135deg, var(--brand-blue-dark), var(--brand-blue-mid), var(--brand-sky-accent));
+
+  --gradient-glow: radial-gradient(circle at 30% 30%, var(--brand-sky-accent), var(--brand-blue-mid) 70%);
+
 }
+
+
 
 /* ---------------- Base Styles ---------------- */
-body {
-  font-family: 'Arial', sans-serif;
-  color: var(--brand-text-color);
-  background-color: white;
-  margin: 0;
+
+* {
+
+  box-sizing: border-box;
+
 }
 
-/* ---------------- Navigation ---------------- */
-.brand-bg {
-  background-color: var(--brand-blue-dark) !important;
+
+
+body {
+
+  margin: 0;
+
+  font-family: "Poppins", sans-serif;
+
+  color: var(--brand-text-color);
+
+  background: #fff;
+
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
+
 }
+
+
+
+/* Scroll Progress Bar */
+
+body::before {
+
+  content: "";
+
+  position: fixed;
+
+  top: 0;
+
+  left: 0;
+
+  height: 4px; /* Slightly thinner */
+
+  width: 0%;
+
+  background: var(--gradient-main);
+
+  z-index: 9999;
+
+  animation: scrollProgress linear both;
+
+}
+
+@keyframes scrollProgress {
+
+  from { width: 0; }
+
+  to { width: 100%; }
+
+}
+
+
+
+/* ---------------- Navbar ---------------- */
 
 .navbar {
-  padding-top: var(--navbar-padding-y);
-  padding-bottom: var(--navbar-padding-y);
-  min-height: 90px; /* Enough height for logo + padding */
-  display: flex;
-  align-items: center;
-}
-.Logo img {
-  height: 100px;
-  border-radius: 12px; /* slightly more rounded for modern look */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
-  transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
-  background: linear-gradient(135deg, #dbddde, #e5eaeb); /* subtle gradient overlay */
-  padding: 1px; /* gives space for gradient glow */
+
+  background: rgba(10, 25, 49, 0.95); /* Dark Blue with transparency */
+
+  backdrop-filter: blur(8px);
+
+  transition: all 0.5s ease;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
 }
 
-.Logo img.logo-hover:hover {
-  transform: scale(1.15) rotate(-2deg); /* pop + tilt */
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6));
-  box-shadow: 0 0 15px rgba(0, 123, 255, 0.7), 0 0 25px rgba(0, 212, 255, 0.5); /* glowing effect */
-  cursor: pointer;
+.navbar.scrolled {
+
+  background: var(--brand-blue-dark);
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+
 }
 
-/* Navbar Links */
 .navbar .nav-link {
-  color: rgba(255, 255, 255, 0.8) !important;
-  transition: color 0.3s;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+
+  transition: all 0.3s ease;
+
+  position: relative;
+
 }
+
+
+
+.navbar .nav-link:not(.dropdown-toggle) {
+
+  position: relative;
+
+  display: inline-block;
+
+}
+
+
+
+.navbar .nav-link:not(.dropdown-toggle)::after {
+
+  content: "";
+
+  position: absolute;
+
+  bottom: -5px; /* Adjust position */
+
+  left: 50%; /* Center the underline */
+
+  width: 0;
+
+  height: 2px;
+
+  background: var(--brand-sky-accent); /* Sky Blue Accent */
+
+  transition: width 0.3s ease, left 0.3s ease;
+
+}
+
+
+
+.navbar .nav-link:not(.dropdown-toggle):hover::after {
+
+  width: 100%;
+
+  left: 0;
+
+}
+
+
+
+/* Text hover color for all links */
 
 .navbar .nav-link:hover {
-  color: white !important;
+
+  color: var(--brand-sky-accent); /* Text changes to sky blue on hover */
+
 }
 
-.navbar .btn-outline-light {
-  border-color: rgba(255, 255, 255, 0.5);
-  color: white;
-  transition: background-color 0.3s, border-color 0.3s;
+
+
+/* Navbar Dropdown */
+
+.nav-item.dropdown:hover .dropdown-menu {
+
+  display: block;
+
+  margin-top: 0;
+
 }
 
-.navbar .btn-outline-light:hover {
-  background-color: var(--brand-blue-light);
-  border-color: var(--brand-blue-light);
-  color: white;
+.dropdown-menu {
+
+  background-color: var(--brand-blue-mid);
+
+  border: 1px solid var(--brand-sky-accent);
+
+  border-radius: 6px;
+
+  padding: 0;
+
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+
 }
 
-/* ---------------- Reusable Section Styles ---------------- */
-.section-padding {
-  padding: var(--section-padding);
+.dropdown-menu li a {
+
+  color: #0cbaea;
+
+  padding: 10px 15px;
+
+  transition: background-color 0.3s, color 0.3s;
+
 }
 
-.section-padding-lg {
-  padding: 100px 0;
-}
+.dropdown-menu li a:hover {
 
-.bg-light-section {
-  background-color: var(--section-bg-light);
-}
-
-.brand-text {
-  color: var(--brand-blue-dark);
-}
-
-/* ---------------- Home (Hero) Section ---------------- */
-.hero-section {
-  height: 60vh;
-  min-height: 400px;
-  background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)),
-              url('https://picsum.photos/1920/1080?grayscale') center/cover no-repeat;
-  color: white;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* ---------------- Services Section ---------------- */
-.service-card {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease, background-color 0.3s;
-}
-
-.service-card:hover {
-  transform: translateY(-5px);
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* ---------------- Why Choose Us Section ---------------- */
-.why-list {
-  font-size: 1.15rem;
-  line-height: 2.2;
-}
-
-.why-list li {
-  background-color: white;
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  border-left: 5px solid var(--brand-blue-dark);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-/* ---------------- Contact Form ---------------- */
-.brand-btn {
   background-color: var(--brand-blue-dark);
+
+  color: var(--brand-sky-accent);
+
+}
+
+
+
+/* ---------------- Logo ---------------- */
+
+@keyframes floatLogo {
+
+  0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 6px rgba(90, 217, 249, 0.5)); }
+
+  50% { transform: translateY(-6px); filter: drop-shadow(0 0 16px rgba(90, 217, 249, 0.8)); }
+
+}
+
+.Logo img {
+
+  height: 90px;
+
+  background-color: #fff; /* White background for visibility */
+
+  padding: 5px; /* Added slight padding */
+
+  border-radius: 12px;
+
+  animation: floatLogo 4s ease-in-out infinite;
+
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+}
+
+.Logo img:hover {
+
+  transform: scale(1.05) rotate(1deg);
+
+}
+
+
+
+/* ---------------- Hero Section ---------------- */
+
+@keyframes pulseAccent {
+
+  0% { text-shadow: 0 0 10px rgba(90, 217, 249, 0.0); }
+
+  50% { text-shadow: 0 0 25px var(--brand-sky-accent); }
+
+  100% { text-shadow: 0 0 10px rgba(90, 217, 249, 0.0); }
+
+}
+
+
+
+/* New Animation for Glowing Overlay */
+
+@keyframes rotatingGlow {
+
+  0% { transform: scale(1.1) rotate(0deg); opacity: 0.2; }
+
+  50% { transform: scale(1.3) rotate(180deg); opacity: 0.4; }
+
+  100% { transform: scale(1.1) rotate(360deg); opacity: 0.2; }
+
+}
+
+
+.hero-section {
+  position: relative;
+  height: 100vh;
+  background: linear-gradient(rgba(10, 25, 49, 0.3), rgba(10, 25, 49, 0.3)),
+    url("./assets/images/1 Row Houses.jpg") center/cover fixed no-repeat;
   color: white;
-  border: none;
-  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  overflow: hidden;
+}
+
+
+/* New Dynamic Glowing Overlay */
+
+.hero-section::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: -50px; /* Make it larger than the section */
+
+  background: radial-gradient(circle at 10% 20%, var(--brand-sky-accent) 0%, transparent 30%), 
+
+              radial-gradient(circle at 80% 90%, var(--brand-blue-mid) 0%, transparent 40%);
+
+  opacity: 0.35; 
+
+  z-index: 1;
+
+  animation: rotatingGlow 15s infinite linear; /* Apply the new rotating glow animation */
+
+}
+
+
+
+/* Ensure content is above the dynamic overlay */
+
+.hero-section > .container {
+
+    position: relative;
+
+    z-index: 2; 
+
+}
+
+
+
+/* Remove the placeholder styles */
+
+.hero-image-placeholder,
+
+.hero-image-placeholder::before {
+
+    display: none !important;
+
+}
+
+
+
+.hero-section h1 {
+
+  font-size: 4rem; /* Increased font size */
+
+  letter-spacing: 2px; /* Increased letter spacing */
+
+  color: #fff; /* Changed color to white for contrast */
+
+  /* Neon-like glow effect on the title */
+
+  text-shadow: 0 0 7px var(--brand-sky-accent), 0 0 15px var(--brand-sky-accent), 0 0 25px rgba(90, 217, 249, 0.7);
+
+  animation: fadeSlideDown 1.4s ease both, pulseAccent 4s infinite ease-in-out; 
+
+}
+
+
+
+.hero-section p {
+
+  margin-top: 1.5rem;
+
+  font-size: 1.5rem; /* Increased font size */
+
+  color: var(--brand-sky-accent); /* Made subtitle accent color */
+
+  font-weight: 500;
+
+  animation: fadeSlideUp 1.8s ease both;
+
+}
+
+
+
+
+
+/* ---------------- Buttons ---------------- */
+
+.brand-btn {
+
+  background: var(--gradient-main);
+
+  border: 2px solid var(--brand-sky-accent); /* Added a border */
+
+  border-radius: 40px;
+
+  padding: 14px 40px;
+
+  color: #fff;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  box-shadow: 0 8px 20px rgba(90, 217, 249, 0.4); /* New shadow color */
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition: all 0.4s ease-in-out;
+
 }
 
 .brand-btn:hover {
-  background-color: var(--brand-blue-light);
-  color: white;
+
+  transform: translateY(-7px) scale(1.02); /* More dramatic lift and slight scale */
+
+  box-shadow: 0 18px 35px rgba(90, 217, 249, 0.9); /* Stronger shadow */
+
+  color: #fff;
+
 }
 
-.form-control:focus {
-  border-color: var(--brand-blue-light);
-  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+
+
+.contact-btn {
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
+  transition: 0.3s;
+
 }
 
-.brand-link {
+
+
+.contact-btn:hover {
+
   color: var(--brand-blue-dark);
-  text-decoration: none;
+
+  background-color: white;
+
+  border-color: white;
+
 }
 
-.brand-link:hover {
-  color: var(--brand-blue-light);
-  text-decoration: underline;
+
+
+/* ---------------- Section Styling ---------------- */
+
+.section-padding {
+
+  padding: var(--section-padding);
+
 }
 
-/* ---------------- Mobile Adjustments ---------------- */
-@media (max-width: 991px) {
-  .navbar {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-  }
+.bg-light-section {
 
-  .hero-section {
-    height: 50vh;
-  }
+  background: var(--section-bg-light);
 
-  .section-padding {
-    padding: 50px 0;
-  }
-
-  /* Reduce logo size on mobile */
-  .brand-logo {
-    height: 50px;
-  }
-
-  .brand-logo-text {
-    font-size: 1.2rem;
-  }
 }
 
-/* ---------------- Custom Utility Styles ---------------- */
-.bg-primary-light {
-  background-color: var(--brand-blue-light);
-  color: white;
+
+
+h2.display-4 {
+
+  text-align: center;
+
+  font-weight: 800;
+
+  color: var(--brand-blue-dark);
+
+  position: relative;
+
+  margin-bottom: 2.5rem;
+
 }
 
-.service-list-white li {
-  padding: 5px 0;
+h2.display-4::after {
+
+  content: "";
+
+  width: 100px;
+
+  height: 5px; /* Slightly thicker underline */
+
+  background: var(--brand-sky-accent); /* Solid Sky Blue Accent */
+
+  border-radius: 3px;
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: -15px;
+
+  transform: translateX(-50%);
+
 }
 
-.why-list-small li {
-  margin-bottom: 5px;
-  padding: 5px 0;
-  font-size: 0.95rem;
-}
+
+
+/* ---------------- Cards ---------------- */
 
 .card-hover-light {
-  border: 1px solid #e9ecef;
-  transition: box-shadow 0.3s ease;
+
+  background: #fff;
+
+  border-radius: 18px; /* Slightly larger radius */
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  position: relative;
+
+  overflow: hidden;
+
+  border: 1px solid #eee;
+
+}
+
+.card-hover-light::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: var(--gradient-glow);
+
+  opacity: 0;
+
+  transition: opacity 0.5s;
+
+  z-index: 0;
+
+}
+
+.card-hover-light:hover::before {
+
+  opacity: 0.1;
+
 }
 
 .card-hover-light:hover {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+
+  transform: translateY(-12px) rotate(-1deg); /* Added subtle rotation */
+
+  box-shadow: 0 20px 50px rgba(90, 217, 249, 0.35); /* New shadow color */
+
 }
 
-/* Ensure the Mortgage card background is white */
+.card-hover-light * {
+
+  position: relative;
+
+  z-index: 1;
+
+}
+
+.list-unstyled li {
+
+  color: var(--brand-text-color); /* Make list items use body text color */
+
+}
+
+
+
+/* Mortgage Card Specific Styling */
+
 .mortgage-card {
-  background-color: white !important;
+
+  border-top: 5px solid var(--brand-blue-mid);
+
+  transition: border-color 0.4s;
+
+}
+
+.mortgage-card:hover {
+
+  border-top-color: var(--brand-sky-accent);
+
+}
+
+.mortgage-card .brand-text {
+
+  color: var(--brand-blue-mid);
+
+}
+
+
+
+/* ---------------- Reveal Animations ---------------- */
+
+@keyframes fadeSlideUp {
+
+  0% { opacity: 0; transform: translateY(60px); }
+
+  100% { opacity: 1; transform: translateY(0); }
+
+}
+
+@keyframes fadeSlideDown {
+
+  0% { opacity: 0; transform: translateY(-60px); }
+
+  100% { opacity: 1; transform: translateY(0); }
+
+}
+
+@keyframes fadeZoomIn {
+
+  0% { opacity: 0; transform: scale(0.98); }
+
+  100% { opacity: 1; transform: scale(1); }
+
+}
+
+/* New Reveal Animation Variations */
+
+@keyframes slideInLeft {
+
+  0% { opacity: 0; transform: translateX(-100px); }
+
+  100% { opacity: 1; transform: translateX(0); }
+
+}
+
+@keyframes slideInRight {
+
+  0% { opacity: 0; transform: translateX(100px); }
+
+  100% { opacity: 1; transform: translateX(0); }
+
+}
+
+
+
+
+
+.reveal {
+
+  opacity: 0;
+
+  transform: translateY(60px);
+
+  transition: all 1.2s ease;
+
+}
+
+
+
+/* Default reveal is fade-zoom */
+
+.reveal.active {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+  animation: fadeZoomIn 1.5s ease forwards;
+
+}
+
+
+
+/* Specific classes to use in App.jsx */
+
+.reveal.slide-left.active {
+
+  animation: slideInLeft 1.2s ease forwards;
+
+}
+
+.reveal.slide-right.active {
+
+  animation: slideInRight 1.2s ease forwards;
+
+}
+
+/* Note: fade-zoom is the default .reveal.active behavior, but the class is added for clarity */
+
+.reveal.fade-zoom.active {
+
+  animation: fadeZoomIn 1.5s ease forwards;
+
+}
+
+
+
+
+
+/* ---------------- Back To Top ---------------- */
+
+#backToTop {
+
+  position: fixed;
+
+  bottom: 30px;
+
+  right: 30px;
+
+  background: var(--gradient-main);
+
+  color: #fff;
+
+  border: none;
+
+  border-radius: 50%;
+
+  width: 50px;
+
+  height: 50px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 1.4rem;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform: translateY(40px);
+
+  transition: all 0.4s ease;
+
+  z-index: 999;
+
+}
+
+#backToTop.show {
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transform: translateY(0);
+
+}
+
+#backToTop:hover {
+
+  transform: translateY(-3px) scale(1.1);
+
+  box-shadow: 0 10px 30px rgba(90, 217, 249, 0.7);
+
+}
+
+
+
+/* ---------------- Footer ---------------- */
+
+footer {
+
+  background: var(--brand-blue-dark);
+
+  color: #e0e0e0;
+
+  text-align: center;
+
+  padding: 45px 0;
+
+  font-size: 0.9rem;
+
+  box-shadow: inset 0 6px 10px rgba(0,0,0,0.4);
+
+}
+
+footer p {
+
+  margin: 6px 0;
+
+  opacity: 0.8;
+
+}
+
+
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 991px) {
+
+  .hero-section {
+
+    height: 80vh; /* Adjusted for better mobile view */
+
+    justify-content: center; /* Center content on mobile */
+
+  }
+
+  .Logo img {
+
+    height: 60px;
+
+  }
+
+  .hero-section h1 {
+
+    font-size: 2.5rem;
+
+    text-align: center;
+
+  }
+
+  .hero-section p {
+
+    text-align: center;
+
+    font-size: 1.25rem;
+
+  }
+
+  h2.display-4 {
+
+    font-size: 1.7rem;
+
+  }
+
+  .section-padding {
+
+    padding: 60px 0;
+
+  }
+
 }
