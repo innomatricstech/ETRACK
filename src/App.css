@@ -1,24 +1,30 @@
 /* ---------------- Brand Variables ---------------- */
 
+
+
 :root {
 
-  /* New Theme: Dark Blue & Sky Blue */
+  --brand-blue-dark: #0a1931;
 
-  --brand-blue-dark: #0a1931; /* Very Dark Blue/Navy */
+  --brand-blue-mid: #15325c;
 
-  --brand-blue-mid: #15325c; /* Medium Slate Blue */
-
-  --brand-sky-accent: #5ad9f9; /* Bright Sky Blue/Cyan Accent */
+  --brand-sky-accent: #5ad9f9;
 
   --brand-text-color: #1a1a1a;
 
-  --section-bg-light: #f0f8ff; /* Light Sky Blue/Alice Blue (Good background color) */
+  --section-bg-light: #f0f8ff;
 
-  --section-padding: 120px 0; /* Increased padding for better gap/visual space */
+  --section-padding: 120px 0;
 
   --gradient-main: linear-gradient(135deg, var(--brand-blue-dark), var(--brand-blue-mid), var(--brand-sky-accent));
 
   --gradient-glow: radial-gradient(circle at 30% 30%, var(--brand-sky-accent), var(--brand-blue-mid) 70%);
+
+  --navbar-light-bg: #f8f8f8;
+
+  --navbar-light-scrolled-bg: #ffffff;
+
+  --navbar-light-text: var(--brand-blue-mid);
 
 }
 
@@ -36,7 +42,7 @@
 
 body {
 
-  margin: 0;
+  margin-top: 90px; /* Compensation for fixed navbar */
 
   font-family: "Poppins", sans-serif;
 
@@ -52,85 +58,205 @@ body {
 
 
 
-/* Scroll Progress Bar */
+/* ---------------- Navbar (Enhanced Layout and Style) ---------------- */
 
-body::before {
+.navbar {
 
-  content: "";
+  height: 90px;
 
-  position: fixed;
+  display: flex;
+
+  align-items: center;
+
+  background: var(--navbar-light-bg);
+
+  backdrop-filter: blur(10px); /* Slightly stronger blur */
+
+  transition: all 0.5s ease;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Sharper shadow */
+
+  padding: 0 20px;
+
+  z-index: 999;
+
+  position: fixed; /* Fix the navbar to the top */
 
   top: 0;
 
   left: 0;
 
-  height: 4px; /* Slightly thinner */
-
-  width: 0%;
-
-  background: var(--gradient-main);
-
-  z-index: 9999;
-
-  animation: scrollProgress linear both;
-
-}
-
-@keyframes scrollProgress {
-
-  from { width: 0; }
-
-  to { width: 100%; }
+  right: 0;
 
 }
 
 
-
-/* ---------------- Navbar ---------------- */
-
-.navbar {
-
-  background: rgba(10, 25, 49, 0.95); /* Dark Blue with transparency */
-
-  backdrop-filter: blur(8px);
-
-  transition: all 0.5s ease;
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-
-}
 
 .navbar.scrolled {
 
-  background: var(--brand-blue-dark);
+  height: 80px; /* Slightly shrink on scroll */
 
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  background: var(--navbar-light-scrolled-bg);
+
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3); /* Darker shadow on scroll */
 
 }
 
+
+
+/* Navbar Container - Adjusted for fixed logo/toggler layout */
+
+.navbar .container {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between; /* Space out logo area and toggler/menu area */
+
+  position: relative;
+
+  width: 100%;
+
+  max-width: 1300px; /* Increased max width for more space */
+
+  padding: 0; /* Remove existing padding for better control */
+
+  margin: 0 auto; /* Center the container */
+
+}
+
+
+
+/* ---------------- Logo Fixed Left (Relative in Container) ---------------- */
+
+.navbar-logo {
+
+  position: relative; /* Relative within the container now */
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+}
+
+
+
+.navbar-logo img {
+
+  height: 100px;
+
+  width: auto;
+
+  transition: transform 0.4s ease, filter 0.4s ease, height 0.3s ease;
+
+  animation: logo-pulse 8s infinite ease-in-out alternate;
+
+}
+
+
+
+.navbar-logo img:hover {
+
+  transform: scale(1.15) rotate(-2deg);
+
+  filter: drop-shadow(0 0 15px var(--brand-sky-accent)) brightness(1.1);
+
+}
+
+
+
+@keyframes logo-pulse {
+
+  0%, 100% { transform: scale(1); }
+
+  50% { transform: scale(1.02); }
+
+}
+
+
+
+/* ---------------- Navbar Menu & Toggler ---------------- */
+
+.navbar-menu-wrapper {
+
+  display: flex;
+
+  align-items: center;
+
+  flex-grow: 0; /* Let the logo take precedence */
+
+  justify-content: flex-end;
+
+}
+
+
+
+/* Toggler Button Enhancement */
+
+.navbar-toggler {
+
+  border: 2px solid var(--brand-sky-accent); /* Accent border */
+
+  border-radius: 8px;
+
+  padding: 6px 10px;
+
+  transition: all 0.3s ease;
+
+}
+
+
+
+.navbar-toggler:focus {
+
+  box-shadow: 0 0 0 0.25rem rgba(90, 217, 249, 0.5); /* Glowing focus ring */
+
+}
+
+
+
+.navbar-toggler-icon {
+
+  /* Change the stroke color to mid-blue for better contrast */
+
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2315325c' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+
+  height: 1.5em; /* Slightly larger icon */
+
+  width: 1.5em;
+
+}
+
+
+
+/* Navigation Links Polish */
+
 .navbar .nav-link {
 
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--brand-blue-dark); /* Use darker blue for link text for strong contrast */
 
-  font-weight: 500;
+  font-weight: 600; /* Bolder links */
 
-  letter-spacing: 0.5px;
+  text-transform: uppercase; /* Subtle formal touch */
+
+  letter-spacing: 1px;
 
   transition: all 0.3s ease;
 
   position: relative;
 
-}
-
-
-
-.navbar .nav-link:not(.dropdown-toggle) {
-
-  position: relative;
-
-  display: inline-block;
+  padding: 10px 15px;
 
 }
+
+
 
 
 
@@ -140,15 +266,15 @@ body::before {
 
   position: absolute;
 
-  bottom: -5px; /* Adjust position */
+  bottom: -5px;
 
-  left: 50%; /* Center the underline */
+  left: 50%;
 
   width: 0;
 
   height: 2px;
 
-  background: var(--brand-sky-accent); /* Sky Blue Accent */
+  background: var(--brand-sky-accent);
 
   transition: width 0.3s ease, left 0.3s ease;
 
@@ -166,11 +292,9 @@ body::before {
 
 
 
-/* Text hover color for all links */
-
 .navbar .nav-link:hover {
 
-  color: var(--brand-sky-accent); /* Text changes to sky blue on hover */
+  color: var(--brand-sky-accent);
 
 }
 
@@ -186,6 +310,8 @@ body::before {
 
 }
 
+
+
 .dropdown-menu {
 
   background-color: var(--brand-blue-mid);
@@ -200,15 +326,19 @@ body::before {
 
 }
 
+
+
 .dropdown-menu li a {
 
-  color: #0cbaea;
+  color: #249de9;
 
   padding: 10px 15px;
 
   transition: background-color 0.3s, color 0.3s;
 
 }
+
+
 
 .dropdown-menu li a:hover {
 
@@ -220,35 +350,35 @@ body::before {
 
 
 
-/* ---------------- Logo ---------------- */
+/* Contact button Polish */
 
-@keyframes floatLogo {
+.navbar .btn-outline-light {
 
-  0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 6px rgba(90, 217, 249, 0.5)); }
+  color: var(--brand-blue-mid);
 
-  50% { transform: translateY(-6px); filter: drop-shadow(0 0 16px rgba(90, 217, 249, 0.8)); }
+  border-color: var(--brand-blue-mid);
 
-}
+  font-weight: 700;
 
-.Logo img {
+  transition: all 0.3s ease;
 
-  height: 90px;
+  padding: 8px 20px;
 
-  background-color: #fff; /* White background for visibility */
-
-  padding: 5px; /* Added slight padding */
-
-  border-radius: 12px;
-
-  animation: floatLogo 4s ease-in-out infinite;
-
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border-radius: 5px;
 
 }
 
-.Logo img:hover {
 
-  transform: scale(1.05) rotate(1deg);
+
+.navbar .btn-outline-light:hover {
+
+  color: #fff; /* White text on hover */
+
+  background-color: var(--brand-blue-mid);
+
+  border-color: var(--brand-blue-mid);
+
+  box-shadow: 0 5px 15px rgba(21, 50, 92, 0.3);
 
 }
 
@@ -256,46 +386,45 @@ body::before {
 
 /* ---------------- Hero Section ---------------- */
 
-@keyframes pulseAccent {
-
-  0% { text-shadow: 0 0 10px rgba(90, 217, 249, 0.0); }
-
-  50% { text-shadow: 0 0 25px var(--brand-sky-accent); }
-
-  100% { text-shadow: 0 0 10px rgba(90, 217, 249, 0.0); }
-
-}
-
-
-
-/* New Animation for Glowing Overlay */
-
-@keyframes rotatingGlow {
-
-  0% { transform: scale(1.1) rotate(0deg); opacity: 0.2; }
-
-  50% { transform: scale(1.3) rotate(180deg); opacity: 0.4; }
-
-  100% { transform: scale(1.1) rotate(360deg); opacity: 0.2; }
-
-}
-
-
 .hero-section {
+
   position: relative;
+
   height: 100vh;
-  background: linear-gradient(rgba(10, 25, 49, 0.3), rgba(10, 25, 49, 0.3)),
-    url("./assets/images/1 Row Houses.jpg") center/cover fixed no-repeat;
+
+  /* Background image is set inline in the React component for dynamic pathing */
+
+  background-size: cover;
+
+  background-position: center;
+
+  background-attachment: fixed;
+
   color: white;
+
   display: flex;
+
   align-items: center;
+
   justify-content: flex-start;
+
   text-align: left;
+
   overflow: hidden;
+
+  transition: transform 0.1s ease-out;
+
 }
 
 
-/* New Dynamic Glowing Overlay */
+
+.hero-section.parallax {
+
+  transform: translateY(20px);
+
+}
+
+
 
 .hero-section::before {
 
@@ -303,41 +432,39 @@ body::before {
 
   position: absolute;
 
-  inset: -50px; /* Make it larger than the section */
+  inset: -50px;
 
   background: radial-gradient(circle at 10% 20%, var(--brand-sky-accent) 0%, transparent 30%), 
 
               radial-gradient(circle at 80% 90%, var(--brand-blue-mid) 0%, transparent 40%);
 
-  opacity: 0.35; 
+  opacity: 0.35;
 
   z-index: 1;
 
-  animation: rotatingGlow 15s infinite linear; /* Apply the new rotating glow animation */
+  animation: rotatingGlow 15s infinite linear;
 
 }
 
 
 
-/* Ensure content is above the dynamic overlay */
+@keyframes rotatingGlow {
+
+  0% { transform: rotate(0deg); }
+
+  100% { transform: rotate(360deg); }
+
+}
+
+
 
 .hero-section > .container {
 
-    position: relative;
+  position: relative;
 
-    z-index: 2; 
+  z-index: 2;
 
-}
-
-
-
-/* Remove the placeholder styles */
-
-.hero-image-placeholder,
-
-.hero-image-placeholder::before {
-
-    display: none !important;
+  padding: 0 15px;
 
 }
 
@@ -345,17 +472,15 @@ body::before {
 
 .hero-section h1 {
 
-  font-size: 4rem; /* Increased font size */
+  font-size: 4rem;
 
-  letter-spacing: 2px; /* Increased letter spacing */
+  letter-spacing: 2px;
 
-  color: #fff; /* Changed color to white for contrast */
-
-  /* Neon-like glow effect on the title */
+  color: #fff;
 
   text-shadow: 0 0 7px var(--brand-sky-accent), 0 0 15px var(--brand-sky-accent), 0 0 25px rgba(90, 217, 249, 0.7);
 
-  animation: fadeSlideDown 1.4s ease both, pulseAccent 4s infinite ease-in-out; 
+  animation: fadeSlideDown 1.4s ease both, glowPulse 3s infinite ease-in-out;
 
 }
 
@@ -365,9 +490,9 @@ body::before {
 
   margin-top: 1.5rem;
 
-  font-size: 1.5rem; /* Increased font size */
+  font-size: 1.5rem;
 
-  color: var(--brand-sky-accent); /* Made subtitle accent color */
+  color: var(--brand-sky-accent);
 
   font-weight: 500;
 
@@ -377,15 +502,13 @@ body::before {
 
 
 
-
-
 /* ---------------- Buttons ---------------- */
 
 .brand-btn {
 
   background: var(--gradient-main);
 
-  border: 2px solid var(--brand-sky-accent); /* Added a border */
+  border: 2px solid var(--brand-sky-accent);
 
   border-radius: 40px;
 
@@ -397,45 +520,25 @@ body::before {
 
   letter-spacing: 0.8px;
 
-  box-shadow: 0 8px 20px rgba(90, 217, 249, 0.4); /* New shadow color */
-
-  position: relative;
-
-  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(90, 217, 249, 0.4);
 
   transition: all 0.4s ease-in-out;
 
+  animation: bounceIn 1s ease-out;
+
 }
+
+
 
 .brand-btn:hover {
 
-  transform: translateY(-7px) scale(1.02); /* More dramatic lift and slight scale */
+  transform: translateY(-7px) scale(1.02);
 
-  box-shadow: 0 18px 35px rgba(90, 217, 249, 0.9); /* Stronger shadow */
+  box-shadow: 0 18px 35px rgba(90, 217, 249, 0.9);
 
   color: #fff;
 
-}
-
-
-
-.contact-btn {
-
-  border: 1px solid rgba(255, 255, 255, 0.7);
-
-  transition: 0.3s;
-
-}
-
-
-
-.contact-btn:hover {
-
-  color: var(--brand-blue-dark);
-
-  background-color: white;
-
-  border-color: white;
+  animation: none;
 
 }
 
@@ -448,6 +551,24 @@ body::before {
   padding: var(--section-padding);
 
 }
+
+
+
+.section-padding-lg {
+
+  padding: 140px 0;
+
+}
+
+
+
+.abstract-section-padding {
+
+  padding: 80px 0 120px 0; 
+
+}
+
+
 
 .bg-light-section {
 
@@ -469,7 +590,29 @@ h2.display-4 {
 
   margin-bottom: 2.5rem;
 
+  animation: glowPulse 4s infinite ease-in-out;
+
 }
+
+
+
+#titleservices h2.display-4 {
+
+  color: #fff;
+
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 15px var(--brand-sky-accent);
+
+}
+
+
+
+#titleservices h2.display-4::after {
+
+  background: var(--brand-sky-accent);
+
+}
+
+
 
 h2.display-4::after {
 
@@ -477,9 +620,9 @@ h2.display-4::after {
 
   width: 100px;
 
-  height: 5px; /* Slightly thicker underline */
+  height: 5px;
 
-  background: var(--brand-sky-accent); /* Solid Sky Blue Accent */
+  background: var(--brand-sky-accent);
 
   border-radius: 3px;
 
@@ -495,13 +638,41 @@ h2.display-4::after {
 
 
 
+.brand-bg {
+
+  background-color: var(--brand-blue-mid);
+
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.0) 100%);
+
+  color: #fff;
+
+}
+
+
+
+.brand-bg h4 {
+
+  color: #fff !important;
+
+}
+
+
+
+.brand-bg ul li {
+
+  color: #e0e0e0;
+
+}
+
+
+
 /* ---------------- Cards ---------------- */
 
 .card-hover-light {
 
   background: #fff;
 
-  border-radius: 18px; /* Slightly larger radius */
+  border-radius: 18px;
 
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 
@@ -514,6 +685,8 @@ h2.display-4::after {
   border: 1px solid #eee;
 
 }
+
+
 
 .card-hover-light::before {
 
@@ -533,19 +706,25 @@ h2.display-4::after {
 
 }
 
+
+
 .card-hover-light:hover::before {
 
   opacity: 0.1;
 
 }
 
+
+
 .card-hover-light:hover {
 
-  transform: translateY(-12px) rotate(-1deg); /* Added subtle rotation */
+  transform: translateY(-12px) rotate(-1deg) scale(1.02);
 
-  box-shadow: 0 20px 50px rgba(90, 217, 249, 0.35); /* New shadow color */
+  box-shadow: 0 20px 50px rgba(90, 217, 249, 0.35);
 
 }
+
+
 
 .card-hover-light * {
 
@@ -555,15 +734,7 @@ h2.display-4::after {
 
 }
 
-.list-unstyled li {
 
-  color: var(--brand-text-color); /* Make list items use body text color */
-
-}
-
-
-
-/* Mortgage Card Specific Styling */
 
 .mortgage-card {
 
@@ -571,13 +742,19 @@ h2.display-4::after {
 
   transition: border-color 0.4s;
 
+  animation: bounceIn 0.8s ease-out;
+
 }
+
+
 
 .mortgage-card:hover {
 
   border-top-color: var(--brand-sky-accent);
 
 }
+
+
 
 .mortgage-card .brand-text {
 
@@ -587,51 +764,49 @@ h2.display-4::after {
 
 
 
+.stagger-item {
+
+  opacity: 0;
+
+  transform: translateY(30px);
+
+  transition: all 0.6s ease;
+
+}
+
+
+
+.stagger-item.active {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+  animation: staggerFade 0.6s ease forwards;
+
+}
+
+
+
+.list-unstyled li i {
+
+  animation: floatIn 2s infinite ease-in-out;
+
+}
+
+
+
 /* ---------------- Reveal Animations ---------------- */
 
-@keyframes fadeSlideUp {
+@keyframes fadeSlideUp { 0% { opacity: 0; transform: translateY(60px); } 100% { opacity: 1; transform: translateY(0); } }
 
-  0% { opacity: 0; transform: translateY(60px); }
+@keyframes fadeSlideDown { 0% { opacity: 0; transform: translateY(-60px); } 100% { opacity: 1; transform: translateY(0); } }
 
-  100% { opacity: 1; transform: translateY(0); }
+@keyframes fadeZoomIn { 0% { opacity: 0; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
 
-}
+@keyframes slideInLeft { 0% { opacity: 0; transform: translateX(-100px); } 100% { opacity: 1; transform: translateX(0); } }
 
-@keyframes fadeSlideDown {
-
-  0% { opacity: 0; transform: translateY(-60px); }
-
-  100% { opacity: 1; transform: translateY(0); }
-
-}
-
-@keyframes fadeZoomIn {
-
-  0% { opacity: 0; transform: scale(0.98); }
-
-  100% { opacity: 1; transform: scale(1); }
-
-}
-
-/* New Reveal Animation Variations */
-
-@keyframes slideInLeft {
-
-  0% { opacity: 0; transform: translateX(-100px); }
-
-  100% { opacity: 1; transform: translateX(0); }
-
-}
-
-@keyframes slideInRight {
-
-  0% { opacity: 0; transform: translateX(100px); }
-
-  100% { opacity: 1; transform: translateX(0); }
-
-}
-
-
+@keyframes slideInRight { 0% { opacity: 0; transform: translateX(100px); } 100% { opacity: 1; transform: translateX(0); } }
 
 
 
@@ -647,8 +822,6 @@ h2.display-4::after {
 
 
 
-/* Default reveal is fade-zoom */
-
 .reveal.active {
 
   opacity: 1;
@@ -661,29 +834,55 @@ h2.display-4::after {
 
 
 
-/* Specific classes to use in App.jsx */
+.reveal.slide-left.active { animation: slideInLeft 1.2s ease forwards; }
 
-.reveal.slide-left.active {
+.reveal.slide-right.active { animation: slideInRight 1.2s ease forwards; }
 
-  animation: slideInLeft 1.2s ease forwards;
+.reveal.fade-zoom.active { animation: fadeZoomIn 1.5s ease forwards; }
 
-}
 
-.reveal.slide-right.active {
 
-  animation: slideInRight 1.2s ease forwards;
+@keyframes bounceIn {
 
-}
+  0% { opacity: 0; transform: scale(0.3) translateY(50px); }
 
-/* Note: fade-zoom is the default .reveal.active behavior, but the class is added for clarity */
+  50% { opacity: 0.8; transform: scale(1.05); }
 
-.reveal.fade-zoom.active {
+  70% { transform: scale(0.9); }
 
-  animation: fadeZoomIn 1.5s ease forwards;
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 
 }
 
 
+
+@keyframes staggerFade {
+
+  0% { opacity: 0; transform: translateY(30px); }
+
+  100% { opacity: 1; transform: translateY(0); }
+
+}
+
+
+
+@keyframes floatIn {
+
+  0%, 100% { transform: translateY(0px); }
+
+  50% { transform: translateY(-5px); }
+
+}
+
+
+
+@keyframes glowPulse {
+
+  0%, 100% { text-shadow: 0 0 10px rgba(90, 217, 249, 0.3); }
+
+  50% { text-shadow: 0 0 20px var(--brand-sky-accent), 0 0 30px rgba(90, 217, 249, 0.5); }
+
+}
 
 
 
@@ -731,7 +930,11 @@ h2.display-4::after {
 
   z-index: 999;
 
+  animation: bounceIn 0.5s ease-out;
+
 }
+
+
 
 #backToTop.show {
 
@@ -742,6 +945,8 @@ h2.display-4::after {
   transform: translateY(0);
 
 }
+
+
 
 #backToTop:hover {
 
@@ -771,60 +976,66 @@ footer {
 
 }
 
-footer p {
+/* ================================================================ */
 
-  margin: 6px 0;
+/* 🌐 RESPONSIVE DESIGN – MOBILE-FIRST */
 
-  opacity: 0.8;
+/* ================================================================ */
+
+
+
+@media (max-width: 991.98px) {
+
+  .navbar { height: 72px; padding: 0 20px; }
+
+  body { margin-top: 72px; }
+
+  .navbar-logo img { height: 75px !important; }
+
+  .navbar-collapse { position: absolute; top: 100%; left: 0; right: 0; width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); padding: 15px 0; background: #fff; }
+
+  .hero-section { height: 90vh; background-attachment: scroll; text-align: center; }
+
+  .hero-section h1 { font-size: 3rem; text-align: center; }
+
+  .hero-section p { font-size: 1.25rem; text-align: center; }
 
 }
 
 
 
-/* ---------------- Responsive ---------------- */
+@media (max-width: 767.98px) {
 
-@media (max-width: 991px) {
+  .navbar { height: 65px; padding: 0 10px; }
 
-  .hero-section {
+  body { margin-top: 65px; }
 
-    height: 80vh; /* Adjusted for better mobile view */
+  .navbar-logo img { height: 65px !important; }
 
-    justify-content: center; /* Center content on mobile */
+  .navbar-toggler { padding: 4px 8px; }
 
-  }
+  .hero-section { height: 80vh; }
 
-  .Logo img {
+  .hero-section h1 { font-size: 2.3rem; }
 
-    height: 60px;
+  .hero-section p { font-size: 1.1rem; }
 
-  }
+  .brand-btn { font-size: 1rem; padding: 12px 30px; border-radius: 35px; }
 
-  .hero-section h1 {
+}
 
-    font-size: 2.5rem;
 
-    text-align: center;
 
-  }
+@media (max-width: 400px) {
 
-  .hero-section p {
+  .navbar-logo img { height: 60px !important; }
 
-    text-align: center;
+  .hero-section h1 { font-size: 1.8rem; }
 
-    font-size: 1.25rem;
+  .hero-section p { font-size: 0.95rem; }
 
-  }
+  .brand-btn { font-size: 0.9rem; padding: 9px 22px; }
 
-  h2.display-4 {
-
-    font-size: 1.7rem;
-
-  }
-
-  .section-padding {
-
-    padding: 60px 0;
-
-  }
+  footer { font-size: 0.75rem; padding: 30px 10px; }
 
 }
